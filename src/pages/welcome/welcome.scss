@@ -1,0 +1,18 @@
+page-welcome {
+    #welcome{
+        background: color($colors, energy);
+        h1{
+            font-size: 52px;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .logo{
+            height: 150px;
+            margin: 50px auto;
+            display: block;
+        }
+        button {
+            margin-bottom: 20px;
+        }
+    }
+}
