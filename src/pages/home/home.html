@@ -1,11 +1,100 @@
 <ion-header>
   <ion-navbar>
-    <img ion-right src="assets/imgs/logo.png" class="navbarLogo" />
-    <ion-title>Home</ion-title>
+    <img left src="assets/imgs/logo.png" class="navbarLogo" />
+
+    <ion-title>Dados Atuais</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>SIOLADM</h2>
-  <button ion-button color="primary" (click)="logout()">Logout</button>
+
+  <!-- <ion-card *ngFor="let item of dataSet"> -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title icon-left>
+        <ion-icon left name="partly-sunny"></ion-icon>
+        Dados Atuais
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-icon name="analytics" item-start></ion-icon>
+          Barometer: {{dataSet.barometer}} hPa
+        </ion-item>
+        <ion-item>
+          <ion-icon name="rainy" item-start></ion-icon>
+          Day Rain: {{dataSet.dayRain}} mm
+        </ion-item>
+        <ion-item>
+          <ion-icon name="rainy" item-start></ion-icon>
+          Rain Rate: {{dataSet.rainRate}} mm
+        </ion-item>
+        <ion-item>
+          <ion-icon name="fastforward" item-start></ion-icon>
+          Forecast: {{dataSet.forecast}}
+        </ion-item>
+        <ion-item>
+          <ion-icon name="water" item-start></ion-icon>
+          In Humidity: {{dataSet.inHumidity}} %
+        </ion-item>
+        <ion-item>
+            <ion-icon name="water" item-start></ion-icon>
+            Out Humidity: {{dataSet.outHumidity}} %
+        </ion-item>
+        <ion-item>
+          <ion-icon name="thermometer" item-start></ion-icon>
+          In Temperature: {{dataSet.inTemperature | number:'0.1-1'}} ºC
+        </ion-item>
+        <ion-item>
+          <ion-icon name="thermometer" item-start></ion-icon>
+          Out Temperature: {{dataSet.outTemperature | number:'0.1-1'}} ºC
+        </ion-item>
+        <ion-item>
+          <ion-icon name="compass" item-start></ion-icon>
+          Wind Direction: {{dataSet.windDirection}}
+        </ion-item>
+        <ion-item>
+          <ion-icon name="speedometer" item-start></ion-icon>
+          Wind Speed: {{dataSet.windSpeed | number:'0.1-1'}} Km/h
+        </ion-item>
+        <ion-item>
+          <ion-icon name="clock" item-start></ion-icon>
+          Read Date: {{ dataSet.readDate | date :"dd/MM/yyyy h:mma": UTC -3}}
+        </ion-item>
+      </ion-list>
+      <!-- 
+      <span>{{ item.readDate | date :"dd/MM/yyyy h:mma": UTC -3}}</span>  -->
+      <!-- <p>Temperatura: {{dataSet.outTemperature | number:'0.1-1'}} ºC</p> -->
+      <!-- <barometer: "",
+      dayRain: "",
+      forecast: "",
+      inHumidity: "",
+      inTemperature: "",
+      outHumidity: "",
+      outTemperature: "",
+      rainRate: "",
+      readDate: "",
+      windDirection: "",
+      windSpeed: "" -->
+      <!-- <span>{{ dataSet.readDate | date :"dd/MM/yyyy h:mma": UTC -3}}</span> -->
+    </ion-card-content>
+
+  </ion-card>
+
+  <!-- <button ion-button color="primary" (click)="logout()">Logout</button> -->
+  <!-- <button ion-button color="primary" (click)="getRead()">Atualizar</button> -->
+  <button full round ion-button icon-left color="primary" (click)="getRead()">
+    <ion-icon name="sync"></ion-icon>
+    Atualizar
+  </button>
+
 </ion-content>

@@ -2,13 +2,15 @@
   <ion-list>
 
     <ion-item>
-      <ion-label fixed>Username</ion-label>
-      <ion-input type="text" value=""></ion-input>
+      <ion-label fixed>Email</ion-label>
+      <ion-input type="text" value="" [(ngModel)]="userData.email" ></ion-input>
+      <!-- pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})" required -->
     </ion-item>
 
     <ion-item>
       <ion-label fixed>Password</ion-label>
-      <ion-input type="password"></ion-input>
+      <ion-input type="password" [(ngModel)]="userData.password"></ion-input>
+      <!-- required -->
     </ion-item>
 
     <button ion-button block color="primary" (click)="login()">Login</button>

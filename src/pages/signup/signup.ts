@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { TabsPage } from '../tabs/tabs';
-
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+//import { TabsPage } from '../tabs/tabs';
+import { Login } from '../login/login';
 /**
  * Generated class for the Signup page.
  *
@@ -14,17 +15,40 @@ import { TabsPage } from '../tabs/tabs';
   templateUrl: 'signup.html',
 })
 export class Signup {
+  responseData: any;
+  userData = {
+    fullName: "",
+    password: "",
+    email: ""
+  };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  // 'username='+$scope.username+'&password='+$scope.password
+  constructor(public navCtrl: NavController, public authService: AuthServiceProvider, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Signup');
   }
 
-  signup(){
-  //Api connections
-  this.navCtrl.push(TabsPage);
+  signup() {
+    //Api connections
+    //this.navCtrl.push(TabsPage);
+    if (this.userData.fullName && this.userData.password && this.userData.email) {
+      this.authService.postData("fullName=" + this.userData.fullName + "&password=" + this.userData.password + "&email=" + this.userData.email, "auth/register").then((result) => {
+        this.responseData = result;
+        //console.log(this.responseData);
+        localStorage.setItem('userData', JSON.stringify(this.responseData));
+        this.navCtrl.push(Login);
+      }, (err) => {
+        //Connection failed message
+      });
+    }
+    else {
+      console.log("Give the complete user data");
+    }
   }
 
+  login() {
+    this.navCtrl.push(Login);
+  }
 }

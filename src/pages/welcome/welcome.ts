@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { Login } from '../login/login';
 import { Signup } from '../signup/signup';
+import { TabsPage } from '../tabs/tabs';
 /**
  * Generated class for the Welcome page.
  *
@@ -17,6 +18,10 @@ import { Signup } from '../signup/signup';
 export class Welcome {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    if(localStorage.getItem('userData')){
+      this.navCtrl.setRoot(TabsPage);
+    }
+
   }
 
   ionViewDidLoad() {

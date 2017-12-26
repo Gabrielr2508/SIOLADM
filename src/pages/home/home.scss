@@ -8,5 +8,7 @@ ion-title {
     line-height: 2;
 }
 page-home {
-
+    .card .list .item {
+        border-bottom: 1px solid color($colors, lightprimary);
+    }
 }
