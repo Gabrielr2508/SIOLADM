@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, ToastController } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { TabsPage } from '../tabs/tabs';
+import { Signup } from '../signup/signup';
 /**
  * Generated class for the Login page.
  *
@@ -29,20 +30,24 @@ export class Login {
 
   login() {
     //Api connections
+
     if (this.userData.password && this.userData.email) {
-      this.authService.postData("password=" + this.userData.password + "&email=" + this.userData.email, "auth/login").then((result) => {
-        this.responseData = result;
-        if (this.responseData) {
-          localStorage.setItem('userData', JSON.stringify(this.responseData));
-          this.navCtrl.push(TabsPage);
-        }
-      }, (err) => {
-        //Connection failed message
-      });
+      if (this.validatePassword(this.userData.password) && this.validateEmail(this.userData.email)) {
+        this.authService.postData("password=" + this.userData.password + "&email=" + this.userData.email, "auth/login").then((result) => {
+          this.responseData = result;
+          if (this.responseData) {
+            localStorage.setItem('userData', JSON.stringify(this.responseData));
+            this.navCtrl.push(TabsPage);
+          }
+        }, (err) => {
+          //Connection failed message
+        });
+      }
     }
     else {
-      this.presentToast("Give user email and password.");
+      this.presentToast("Por favor, insira um email e uma senha válida.");
     }
+
   }
 
   presentToast(msg) {
@@ -55,4 +60,28 @@ export class Login {
     toast.present();
   }
 
+  validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (re.test(email.toLowerCase()))
+      return true;
+    else {
+      this.presentToast("Por favor, insira um e-mail válido.");
+      return false;
+    }
   }
+
+  validatePassword(pass) {
+    if (pass.length > 5) {
+      return true;
+    }
+    else {
+      this.presentToast("A senha deve possuir pelo menos 6 caracteres.");
+      return false;
+    }
+  }
+
+  signup(){
+    this.navCtrl.push(Signup);
+  }
+
+}

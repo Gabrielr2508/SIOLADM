@@ -30,21 +30,21 @@ export class AboutPage {
   }
 
   getDataBetweenDates() {
-    if (this.date.initDate && this.date.initHour && this.date.endHour && this.date.endDate) {
-      this.initString1 = moment(this.date.initDate).format('YYYY-MM-DD')
-        + 'T'
-        + moment(this.date.initHour).format('HH:mm:[00]Z');
+    this.initString1 = moment(this.date.initDate).format('YYYY-MM-DD')
+      + 'T'
+      + moment(this.date.initHour).format('HH:mm:[00]Z');
 
-      this.endString1 = moment(this.date.endDate).format('YYYY-MM-DD')
-        + 'T'
-        + moment(this.date.endHour).format('HH:mm:[00]Z');
+    this.endString1 = moment(this.date.endDate).format('YYYY-MM-DD')
+      + 'T'
+      + moment(this.date.endHour).format('HH:mm:[00]Z');
 
-      this.initString2 = moment.utc(this.initString1).format();
-      this.endString2 = moment.utc(this.endString1).format();
-      console.log(this.initString1);
-      console.log(this.initString2);
-      console.log(this.endString1);
-      console.log(this.endString2);
+    this.initString2 = moment.utc(this.initString1).format();
+    this.endString2 = moment.utc(this.endString1).format();
+    // console.log(this.initString1);
+    // console.log(this.initString2);
+    // console.log(this.endString1);
+    // console.log(this.endString2);
+    if (moment(this.endString2).isAfter(this.initString2)) {
       this.authService.getData("read/" + this.initString2 + "/" + this.endString2).then((result) => {
         this.responseData = result;
         // console.log(this.responseData);
@@ -63,13 +63,15 @@ export class AboutPage {
         //Connection failed message
       });
     }
-
+    else{
+      this.presentToast("A data/hora de início deve ser anterior à data/hora final. Por favor, selecione valores corretos.");
+    }
   }
 
   presentToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
-      duration: 2000,
+      duration: 2500,
       position: 'top'
     });
 

@@ -1,19 +1,18 @@
-<ion-content padding>
-  <ion-list>
+<ion-content padding id="login">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>E-mail</ion-label>
+        <ion-input type="email" value="" [(ngModel)]="userData.email" min="5" required></ion-input>
+        <!-- pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})" required -->
+      </ion-item>
 
-    <ion-item>
-      <ion-label fixed>Email</ion-label>
-      <ion-input type="text" value="" [(ngModel)]="userData.email" ></ion-input>
-      <!-- pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})" required -->
-    </ion-item>
+      <ion-item>
+        <ion-label floating>Senha</ion-label>
+        <ion-input type="password" [(ngModel)]="userData.password" min="6" required></ion-input>
+        <!-- required -->
+      </ion-item>
+    </ion-list>
+    <button full round ion-button color="primary" (click)="login()">Entrar</button>
 
-    <ion-item>
-      <ion-label fixed>Password</ion-label>
-      <ion-input type="password" [(ngModel)]="userData.password"></ion-input>
-      <!-- required -->
-    </ion-item>
-
-    <button ion-button block color="primary" (click)="login()">Login</button>
-
-  </ion-list>
+    <button full round ion-button color="lightprimary" (click)="signup()">Inscrever-se</button>
 </ion-content>
