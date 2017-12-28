@@ -1,18 +1,50 @@
 <ion-header>
   <ion-navbar>
     <img left src="assets/imgs/logo.png" class="navbarLogo" />
-    
+
     <ion-title>Histórico</ion-title>
-    
+
     <ion-buttons end>
       <button ion-button icon-only (click)="logout()">
         <ion-icon name="log-out"></ion-icon>
       </button>
     </ion-buttons>
-  
+
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title icon-left>
+        <ion-icon left name="stats"></ion-icon>
+        Seleção de Período
+      </ion-card-title>
+    </ion-card-header>
 
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>Data de início</ion-label>
+          <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="date.initDate"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label>Hora de Início</ion-label>
+          <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="date.initHour"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label>Data Final</ion-label>
+          <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="date.endDate"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label>Hora Final</ion-label>
+          <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="date.endHour"></ion-datetime>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  <button full round ion-button icon-left color="primary" (click)="getDataBetweenDates()">
+      <ion-icon name="checkmark"></ion-icon>
+      OK
+    </button>
 </ion-content>

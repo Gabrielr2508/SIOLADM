@@ -7,6 +7,7 @@ import { MyApp } from './app.component';
 import { Welcome } from '../pages/welcome/welcome';
 import { Login } from '../pages/login/login';
 import { Signup } from '../pages/signup/signup';
+import { Graph } from '../pages/graph/graph';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
@@ -14,6 +15,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
     Welcome,
     Login,
     Signup,
+    Graph,
     AboutPage,
     ContactPage,
     HomePage,
@@ -38,6 +41,7 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
     Welcome,
     Login,
     Signup,
+    Graph,
     AboutPage,
     ContactPage,
     HomePage,
@@ -45,9 +49,10 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
   ],
   providers: [
     StatusBar,
-    SplashScreen, AuthServiceProvider,
+    SplashScreen, 
+    AuthServiceProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthServiceProvider
+    ScreenOrientation,
   ]
 })
 export class AppModule {}
