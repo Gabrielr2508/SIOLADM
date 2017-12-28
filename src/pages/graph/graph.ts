@@ -27,7 +27,14 @@ export class Graph {
 
   colors: any;
 
+  height: any;
+
+
   constructor(public plt: Platform, public navCtrl: NavController, public navParams: NavParams, private screenOrientation: ScreenOrientation) {
+
+      this.height = this.plt.height() / 2;
+    
+   
     this.dataSet = navParams.get('dataSet');
 
     this.colors = {
@@ -42,18 +49,28 @@ export class Graph {
       9: "#9e8a16",
       10: "#1606ff",
     }
-    //setTimeout(() => console.log(this.iterateData('readDate')), 1000);
+
   }
 
   ionViewDidLoad() {
     if (this.plt.is('android')) {
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
 
-      setTimeout(() => this.screenOrientation.unlock(), 1000);
+      this.screenOrientation.onChange().subscribe(
+        () => {
+          if (this.plt.isPortrait()) {
+            this.height = this.plt.height() / 2;
+            this.lineChart.resize();
+          }
+          else {
+            this.height = this.plt.height();
+            this.lineChart.resize();
+          }
+
+        });
     }
 
-    //console.log(this.plt.is('android'));
-   
+ 
+    let mySymbols = ['hPa', 'ºC', '%', 'ºC', 'Km/h', 'º', '%', 'mm', 'mm', ''];
 
     this.lineChart = new Chart(this.lineCanvas.nativeElement, {
 
@@ -67,8 +84,15 @@ export class Graph {
           position: 'bottom'
         },
         tooltips: {
-          mode: 'index'
-        }
+          mode: 'index',
+          callbacks: {
+            label: function(tooltipItem, data) {
+              return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel + " " + mySymbols[tooltipItem.datasetIndex];
+            }
+          }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
       }
 
     });

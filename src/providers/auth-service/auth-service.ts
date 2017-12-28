@@ -24,7 +24,8 @@ export class AuthServiceProvider {
         resolve(res);
       }, (err) =>{
         reject(err);
-        this.presentToast(err.status + ": " + err.statusText);
+        // console.log(err);
+        this.presentToast(err.status + ": " + err.statusText + " - " + err.error.message);
       });
     });
   }

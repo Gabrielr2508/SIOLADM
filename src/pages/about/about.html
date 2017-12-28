@@ -26,19 +26,19 @@
       <ion-list>
         <ion-item>
           <ion-label>Data de início</ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="date.initDate"></ion-datetime>
+          <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="date.initDate" doneText="Ok" cancelText="Cancelar"></ion-datetime>
         </ion-item>
         <ion-item>
           <ion-label>Hora de Início</ion-label>
-          <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="date.initHour"></ion-datetime>
+          <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="date.initHour" doneText="Ok" cancelText="Cancelar"></ion-datetime>
         </ion-item>
         <ion-item>
           <ion-label>Data Final</ion-label>
-          <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="date.endDate"></ion-datetime>
+          <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="date.endDate" doneText="Ok" cancelText="Cancelar"></ion-datetime>
         </ion-item>
         <ion-item>
           <ion-label>Hora Final</ion-label>
-          <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="date.endHour"></ion-datetime>
+          <ion-datetime displayFormat="HH:mm" pickerFormat="HH mm" [(ngModel)]="date.endHour" doneText="Ok" cancelText="Cancelar"></ion-datetime>
         </ion-item>
       </ion-list>
     </ion-card-content>

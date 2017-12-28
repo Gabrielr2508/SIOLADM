@@ -32,7 +32,7 @@ export class Login {
     //Api connections
 
     if (this.userData.password && this.userData.email) {
-      if (this.validatePassword(this.userData.password) && this.validateEmail(this.userData.email)) {
+      if (this.validateEmail(this.userData.email) && this.validatePassword(this.userData.password)) {
         this.authService.postData("password=" + this.userData.password + "&email=" + this.userData.email, "auth/login").then((result) => {
           this.responseData = result;
           if (this.responseData) {
