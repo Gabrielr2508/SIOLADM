@@ -3,6 +3,7 @@ import { IonicPage, NavController, ToastController } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { TabsPage } from '../tabs/tabs';
 import { Signup } from '../signup/signup';
+import { Network } from '@ionic-native/network';
 /**
  * Generated class for the Login page.
  *
@@ -21,28 +22,35 @@ export class Login {
     email: ""
   };
 
-  constructor(public navCtrl: NavController, public authService: AuthServiceProvider, private toastCtrl: ToastController) {
+  constructor(private network: Network, public navCtrl: NavController, public authService: AuthServiceProvider, private toastCtrl: ToastController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Login');
   }
 
+
   login() {
     //Api connections
 
     if (this.userData.password && this.userData.email) {
-      if (this.validateEmail(this.userData.email) && this.validatePassword(this.userData.password)) {
-        this.authService.postData("password=" + this.userData.password + "&email=" + this.userData.email, "auth/login").then((result) => {
-          this.responseData = result;
-          if (this.responseData) {
-            localStorage.setItem('userData', JSON.stringify(this.responseData));
-            this.navCtrl.push(TabsPage);
-          }
-        }, (err) => {
-          //Connection failed message
-        });
+      if (this.checkConnection()) {
+        if (this.validateEmail(this.userData.email) && this.validatePassword(this.userData.password)) {
+          this.authService.postData("password=" + this.userData.password + "&email=" + this.userData.email, "auth/login").then((result) => {
+            this.responseData = result;
+            if (this.responseData) {
+              localStorage.setItem('userData', JSON.stringify(this.responseData));
+              this.navCtrl.push(TabsPage);
+            }
+          }, (err) => {
+            //Connection failed message
+          });
+        }
       }
+      else {
+        this.presentToast("Sem conexão com a internet.");
+      }
+
     }
     else {
       this.presentToast("Por favor, insira um email e uma senha válida.");
@@ -59,7 +67,7 @@ export class Login {
 
     toast.present();
   }
-
+  //validade email field
   validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (re.test(email.toLowerCase()))
@@ -69,7 +77,7 @@ export class Login {
       return false;
     }
   }
-
+  //validade password field
   validatePassword(pass) {
     if (pass.length > 5) {
       return true;
@@ -80,8 +88,16 @@ export class Login {
     }
   }
 
-  signup(){
+  signup() {
     this.navCtrl.push(Signup);
   }
 
+  checkConnection() {
+    if (this.network.type !== 'none'){
+      console.log(this.network.type);
+      return true;
+  }
+    else
+      return false;
+  }
 }

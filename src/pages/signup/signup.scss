@@ -1,7 +1,23 @@
 page-signup {
     #signup{
-        button {
-            margin-bottom: 20px;
+        ion-card {
+            background-color: rgba(255, 255, 255, 0.2);
         }
+
+        ion-item {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        background: color($colors, energy);
+        
+        button {
+            // margin-bottom: 20px;
+            margin: 20px auto;
+            display: block;
+        }
+        h5 {
+            text-align: center;
+            margin-top: 50px;
+        }
+
     } 
 }

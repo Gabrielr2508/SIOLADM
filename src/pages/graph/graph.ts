@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, App } from 'ionic-angular';
 import { Chart } from 'chart.js';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 /**
@@ -34,7 +34,7 @@ export class Graph {
   dataset4: any;
   windData: any;
 
-  constructor(public plt: Platform, public navCtrl: NavController, public navParams: NavParams, private screenOrientation: ScreenOrientation) {
+  constructor(public plt: Platform, public navCtrl: NavController, public navParams: NavParams, private screenOrientation: ScreenOrientation, public app: App) {
     //initialize canvas height
     this.height = this.plt.height() / 2;
 
@@ -50,16 +50,16 @@ export class Graph {
     this.windData = this.iterateWindData();
 
     this.colors = {
-      1: "#ff06d6",
-      2: "#00a15e",
-      3: "#fbff06",
-      4: "#000000",
-      5: "#ff0000",
-      6: "#ff7b00",
-      7: "#2f91be",
-      8: "#6e00b8",
-      9: "#9e8a16",
-      10: "#1606ff",
+      1: "#ff0000", //red
+      2: "#00ff00", //green
+      3: "#0000ff", //blue
+      4: "#000000", //black
+      5: "#ffa123", //
+      6: "#ff42ab", //
+      7: "#00ffff", //cian
+      8: "#ffaa00", //orange
+      9: "#ffff00", //yellow
+      10: "#ff00ff", //magenta
     }
 
   }
@@ -144,6 +144,9 @@ export class Graph {
         ]
       },
       options: {
+        tooltips: {
+          mode: 'index',
+        },
         responsive: true,
         maintainAspectRatio: false,
       }
@@ -289,6 +292,17 @@ export class Graph {
       if (this.dataset4[i] < this.dataSet[j]['windSpeed'])
         this.dataset4[i] = this.dataSet[j]['windSpeed'].toFixed(2);
     }
+  }
+
+  backToWelcome() {
+    const root = this.app.getRootNav();
+    root.popToRoot();
+  }
+
+  logout() {
+    //Api Token Logout 
+    localStorage.clear();
+    setTimeout(() => this.backToWelcome(), 1000);
   }
 
 }

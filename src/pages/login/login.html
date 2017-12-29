@@ -1,18 +1,35 @@
 <ion-content padding id="login">
-    <ion-list>
-      <ion-item>
-        <ion-label floating>E-mail</ion-label>
-        <ion-input type="email" value="" [(ngModel)]="userData.email" min="5" required></ion-input>
-        <!-- pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})" required -->
-      </ion-item>
+  <ion-card>
 
-      <ion-item>
-        <ion-label floating>Senha</ion-label>
-        <ion-input type="password" [(ngModel)]="userData.password" min="6" required></ion-input>
-        <!-- required -->
-      </ion-item>
-    </ion-list>
-    <button full round ion-button color="primary" (click)="login()">Entrar</button>
+    <ion-card-header>
+      <ion-card-title>
+        Login
+      </ion-card-title>
+    </ion-card-header>
 
-    <button full round ion-button color="lightprimary" (click)="signup()">Inscrever-se</button>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label floating>E-mail</ion-label>
+          <ion-input type="email" value="" [(ngModel)]="userData.email" min="5" required></ion-input>
+          <!-- pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})" required -->
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>Senha</ion-label>
+          <ion-input type="password" [(ngModel)]="userData.password" min="6" required></ion-input>
+          <!-- required -->
+        </ion-item>
+      </ion-list>
+      <button medium round ion-button color="primary" (click)="login()">Entrar</button>
+    </ion-card-content>
+
+    
+
+
+  </ion-card>
+  <!-- <ion-item> -->
+    <h5>Ainda não possui uma conta?</h5>
+    <button small round ion-button color="lightprimary" (click)="signup()">Inscreva-se</button>
+  <!-- </ion-item> -->
 </ion-content>

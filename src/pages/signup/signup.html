@@ -1,21 +1,33 @@
 <ion-content padding id="signup">
-  <ion-list>
+  <ion-card>
 
-    <ion-item>
-      <ion-label floating>Nome</ion-label>
-      <ion-input type="text" value="" [(ngModel)]="userData.fullName" required></ion-input>
-    </ion-item>
+    <ion-card-header>
+      <ion-card-title>
+        Formulário de inscrição
+      </ion-card-title>
+    </ion-card-header>
 
-    <ion-item>
-      <ion-label floating>E-mail</ion-label>
-      <ion-input type="email" value="" [(ngModel)]="userData.email" min="5" required></ion-input>
-    </ion-item>
+    <ion-card-content>
+      <ion-list>
 
-    <ion-item>
-      <ion-label floating>Senha</ion-label>
-      <ion-input type="password" [(ngModel)]="userData.password" min="6" required></ion-input>
-    </ion-item>
-  </ion-list>
-  <button full round ion-button color="primary" (click)="signup()">Inscrever-se</button>
-  <button full round ion-button color="lightprimary" (click)="login()">Entrar</button>
+        <ion-item>
+          <ion-label floating>Nome</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="userData.fullName" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>E-mail</ion-label>
+          <ion-input type="email" value="" [(ngModel)]="userData.email" min="5" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>Senha</ion-label>
+          <ion-input type="password" [(ngModel)]="userData.password" min="6" required></ion-input>
+        </ion-item>
+      </ion-list>
+      <button medium round ion-button color="primary" (click)="signup()">Inscrever-se</button>
+    </ion-card-content>
+  </ion-card>
+  <h5>Já possui uma conta?</h5>
+  <button small round ion-button color="lightprimary" (click)="login()">Entre</button>
 </ion-content>

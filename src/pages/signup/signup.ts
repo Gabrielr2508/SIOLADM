@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angu
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 //import { TabsPage } from '../tabs/tabs';
 import { Login } from '../login/login';
+import { Network } from '@ionic-native/network';
 /**
  * Generated class for the Signup page.
  *
@@ -23,7 +24,7 @@ export class Signup {
   };
 
   // 'username='+$scope.username+'&password='+$scope.password
-  constructor(private toastCtrl: ToastController, public navCtrl: NavController, public authService: AuthServiceProvider, public navParams: NavParams) {
+  constructor(private network: Network, private toastCtrl: ToastController, public navCtrl: NavController, public authService: AuthServiceProvider, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
@@ -34,22 +35,27 @@ export class Signup {
     //Api connections
     //this.navCtrl.push(TabsPage);
     if (this.userData.fullName && this.userData.password && this.userData.email) {
-      if (this.validateName(this.userData.fullName) && this.validateEmail(this.userData.email) && this.validatePassword(this.userData.password)) {
-        this.authService.postData("fullName=" + this.userData.fullName + "&password=" + this.userData.password + "&email=" + this.userData.email, "auth/register").then((result) => {
-          this.responseData = result;
-          //console.log(this.responseData);
-          localStorage.setItem('userData', JSON.stringify(this.responseData));
-          if(this.responseData){
-            this.presentToast("Usuário cadastrado. Por favor, faça login.");
-            this.navCtrl.push(Login);
-          }
-        }, (err) => {
-          //Connection failed message
-        });
+      if (this.checkConnection()) {
+        if (this.validateName(this.userData.fullName) && this.validateEmail(this.userData.email) && this.validatePassword(this.userData.password)) {
+          this.authService.postData("fullName=" + this.userData.fullName + "&password=" + this.userData.password + "&email=" + this.userData.email, "auth/register").then((result) => {
+            this.responseData = result;
+            //console.log(this.responseData);
+            localStorage.setItem('userData', JSON.stringify(this.responseData));
+            if (this.responseData) {
+              this.presentToast("Usuário cadastrado. Por favor, faça login.");
+              this.navCtrl.push(Login);
+            }
+          }, (err) => {
+            //Connection failed message
+          });
+        }
+      }
+      else {
+        this.presentToast("Sem conexão com a internet.");
       }
     }
     else {
-     this.presentToast("Insira os dados completos do usuário.");
+      this.presentToast("Insira os dados completos do usuário.");
     }
   }
 
@@ -95,5 +101,14 @@ export class Signup {
       this.presentToast("Por favor, insira um nome válido.");
       return false;
     }
+  }
+
+  checkConnection() {
+    if (this.network.type !== 'none') {
+      console.log(this.network.type);
+      return true;
+    }
+    else
+      return false;
   }
 }

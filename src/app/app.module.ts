@@ -16,6 +16,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { Network } from '@ionic-native/network';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,8 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
     AuthServiceProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ScreenOrientation,
+    InAppBrowser,
+    Network,
   ]
 })
 export class AppModule {}

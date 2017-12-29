@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, App } from 'ionic-angular';
+import { NavController, App, ToastController } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
-
+import { Network } from '@ionic-native/network';
 
 @Component({
   selector: 'page-home',
@@ -13,10 +13,7 @@ export class HomePage {
   public dataSet: any;
   userToken = "";
 
-  constructor(public navCtrl: NavController, public app: App, public authService: AuthServiceProvider) {
-    //const data = JSON.parse(localStorage.getItem('userData'));
-    //this.userDetails = data;
-    //this.userToken = this.userDetails.token;
+  constructor(private network: Network,  private toastCtrl: ToastController, public navCtrl: NavController, public app: App, public authService: AuthServiceProvider) {
     this.dataSet = {
       barometer: "",
       dayRain: "",
@@ -34,7 +31,7 @@ export class HomePage {
   }
 
   getRead() {
-    //this.authService.getData(this.userToken, "read").then((result) => {
+    if (this.checkConnection()) {
     this.authService.getData("read/last").then((result) => {
       this.responseData = result;
       // console.log(this.responseData);
@@ -48,21 +45,39 @@ export class HomePage {
       //Connection failed message
     });
   }
+  else {
+    this.presentToast("Sem conexão com a internet.");
+  }
+  }
 
   backToWelcome() {
     const root = this.app.getRootNav();
-    root.popToRoot();
+    root.goToRoot();
   }
 
   logout() {
     //Api Token Logout 
     localStorage.clear();
-    if(!localStorage.getItem('userData')){
-      console.log(this.app.getRootNavById('n4'));
-    }
     setTimeout(() => this.backToWelcome(), 1000);
-    
-    //this.backToWelcome();
+  }
+
+  presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 2000,
+      position: 'top'
+    });
+
+    toast.present();
+  }
+
+  checkConnection() {
+    if (this.network.type !== 'none'){
+      console.log(this.network.type);
+      return true;
+  }
+    else
+      return false;
   }
 
 }

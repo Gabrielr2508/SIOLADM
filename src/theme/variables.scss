@@ -29,7 +29,10 @@ $colors: (
   lightprimary:     #B5B5B7,
   light:      #f4f4f4,
   dark:       #222,
-  energy:      #f2b632
+  energy:      #f2b632,
+  git1: rgb(118, 36, 138),
+  git2: rgb(41, 69, 128),
+  git3: rgb(121, 19, 58),
 );
 
 $toolbar-background: color($colors, primary);

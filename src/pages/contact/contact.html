@@ -1,24 +1,95 @@
 <ion-header>
   <ion-navbar>
     <img left src="assets/imgs/logo.png" class="navbarLogo" />
-    
+
     <ion-title>Sobre</ion-title>
-    
+
     <ion-buttons end>
       <button ion-button icon-only (click)="logout()">
         <ion-icon name="log-out"></ion-icon>
       </button>
     </ion-buttons>
-  
+
   </ion-navbar>
 </ion-header>>
 
-<ion-content>
+<ion-content id="about">
+  <!-- <ion-card>
+    <ion-card-header>
+      Sobre o SIOLADM
+    </ion-card-header>
+    <ion-card-content> -->
+
   <ion-list>
-    <ion-list-header>Follow us on Twitter</ion-list-header>
-    <ion-item>
-      <ion-icon name="ionic" item-left></ion-icon>
-      @ionicframework
-    </ion-item>
+
+    <ion-item-group>
+      <ion-item-divider color="light" text-uppercase>Autor</ion-item-divider>
+      <ion-item>
+        <ion-avatar item-start>
+          <img src="assets/imgs/author.png">
+        </ion-avatar>
+        <h2>Gabriel Rafael Gomes</h2>
+        <p>Graduando em Engenharia de Computação</p>
+        <p>UNIVASF</p>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-item-group>
+      <ion-item-divider color="light" text-uppercase>Aplicativo</ion-item-divider>
+      <ion-item>
+        Versão
+        <ion-note item-end>
+          1.0.0
+        </ion-note>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-item-group>
+      <ion-item-divider color="light" text-uppercase>Descrição</ion-item-divider>
+      <ion-item id="text" text-wrap text-justify>
+        <p>Este projeto é um Trabalho de Conclusão de Curso (TCC), que tem como objetivo desenvolver um sistema capaz de informar,
+          via internet, dados meteorológicos obtidos de uma estação Vantage Vue e disponibilizar para o usuário dados e gráficos
+          através de uma aplicação Web e de um aplicativo para o sistema operacional Android.</p>
+
+        <p>O projeto é composto por três partes, um aplicativo Web/Android que possui a função de exibir os dados para o usuário,
+          uma API RESTful que é reponsável por armazenar e servir os dados referentes as leituras da estação meteorológica,
+          bem como os dados de usuários, ambos armazenados em MongoDB, e um Driver que faz a comunicação via Socket TCP entre
+          um computador e a estação meteorológica para capturar e então armazenar esses dados no banco de dados através da
+          API.</p>
+
+        <p>Este TCC é um subprojeto do projeto Sistema de Gestão da Produção de Insetos Modificados para Regiões Endêmicas,
+          conjunto entre a Moscamed e o Colegiado de Engenharia de Computação da Universidade Federal do Vale do São Francisco
+          - CECOMP.</p>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-item-group>
+      <ion-item-divider color="light" text-uppercase>Repositórios do projeto</ion-item-divider>
+      <ion-item>
+        <ion-icon name="logo-github" item-start color="primary"></ion-icon>
+        <h2>SIOLADM APP</h2>
+        <p>Aplicativo desenvolvido em Ionic</p>
+        <button ion-button clear item-end color="primary" (click)="openWithSystemBrowser('https://github.com/Gabrielr2508/SIOLADM')">Ver</button>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="logo-github" item-start color="secondary"></ion-icon>
+        <h2>API RESTful</h2>
+        <p>RESTful API desenvolvida em NodeJS</p>
+        <button ion-button clear item-end color="primary" (click)="openWithSystemBrowser('https://github.com/Gabrielr2508/vantage-api')">Ver</button>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon name="logo-github" item-start color="energy"></ion-icon>
+        <h2>Node-Vantage Driver</h2>
+        <p>Driver desenvolvido em NodeJS</p>
+        <button ion-button clear item-end color="primary" (click)="openWithSystemBrowser('https://github.com/Gabrielr2508/node-vantage')">Ver</button>
+      </ion-item>
+    </ion-item-group>
+
   </ion-list>
+  <!-- </ion-card-content> -->
+
+
+  <!-- </ion-card> -->
 </ion-content>
