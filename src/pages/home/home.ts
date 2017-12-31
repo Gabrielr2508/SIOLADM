@@ -12,6 +12,7 @@ export class HomePage {
   public responseData: any;
   public dataSet: any;
   userToken = "";
+  direction: string;
 
   constructor(private network: Network,  private toastCtrl: ToastController, public navCtrl: NavController, public app: App, public authService: AuthServiceProvider) {
     this.dataSet = {
@@ -37,6 +38,7 @@ export class HomePage {
       // console.log(this.responseData);
       if(this.responseData){
         this.dataSet = this.responseData;
+        this.windDirection();
         console.log(this.dataSet);
       }
       else
@@ -78,6 +80,41 @@ export class HomePage {
   }
     else
       return false;
+  }
+
+  windDirection(){
+    //NE direction
+    if (this.dataSet.windDirection > 22.5 && this.dataSet.windDirection <= 67.5) {
+      this.direction = "Nordeste";
+    }
+    //E direction
+    else if (this.dataSet.windDirection > 67.5 && this.dataSet.windDirection <= 112.5) {
+      this.direction = "Leste";
+    }
+    //SE direction
+    else if (this.dataSet.windDirection > 112.5 && this.dataSet.windDirection <= 157.5) {
+      this.direction = "Sudeste";
+    }
+    //S direction
+    else if (this.dataSet.windDirection > 157.5 && this.dataSet.windDirection <= 202.5) {
+      this.direction = "Sul";
+    }
+    //SO direction
+    else if (this.dataSet.windDirection > 202.5 && this.dataSet.windDirection <= 247.5) {
+      this.direction = "Sudoeste";
+    }
+    //O direction
+    else if (this.dataSet.windDirection > 247.5 && this.dataSet.windDirection <= 292.5) {
+      this.direction = "Oeste";
+    }
+    //NO direction
+    else if (this.dataSet.windDirection > 292.5 && this.dataSet.windDirection <= 337.5) {
+      this.direction = "Noroeste";
+    }
+    //N direction
+    else {
+      this.direction = "Norte";
+    }
   }
 
 }
