@@ -13,8 +13,9 @@ export class HomePage {
   public dataSet: any;
   userToken = "";
   direction: string;
+  actualDate: string;
 
-  constructor(private network: Network,  private toastCtrl: ToastController, public navCtrl: NavController, public app: App, public authService: AuthServiceProvider) {
+  constructor(private network: Network, private toastCtrl: ToastController, public navCtrl: NavController, public app: App, public authService: AuthServiceProvider) {
     this.dataSet = {
       barometer: "",
       dayRain: "",
@@ -28,28 +29,34 @@ export class HomePage {
       windDirection: "",
       windSpeed: ""
     }
+    this.actualDate = "0000-00-00T00:00:00.000Z";
     this.getRead();
   }
 
   getRead() {
     if (this.checkConnection()) {
-    this.authService.getData("read/last").then((result) => {
-      this.responseData = result;
-      // console.log(this.responseData);
-      if(this.responseData){
-        this.dataSet = this.responseData;
-        this.windDirection();
-        console.log(this.dataSet);
-      }
-      else
-        console.log("No access");
-    }, (err) => {
-      //Connection failed message
-    });
-  }
-  else {
-    this.presentToast("Sem conexão com a internet.");
-  }
+      this.authService.getData("read/last").then((result) => {
+        this.responseData = result;
+        // console.log(this.responseData);
+        if (this.responseData) {
+          if (this.responseData.readDate !== this.actualDate) {
+            this.dataSet = this.responseData;
+            this.windDirection();
+            this.actualDate = this.dataSet.readDate;
+            console.log(this.dataSet);
+          }
+          else
+            this.presentToast("Esses são os dados mais atuais.");
+        }
+        else
+          console.log("No access");
+      }, (err) => {
+        //Connection failed message
+      });
+    }
+    else {
+      this.presentToast("Sem conexão com a internet.");
+    }
   }
 
   backToWelcome() {
@@ -74,15 +81,15 @@ export class HomePage {
   }
 
   checkConnection() {
-    if (this.network.type !== 'none'){
+    if (this.network.type !== 'none') {
       console.log(this.network.type);
       return true;
-  }
+    }
     else
       return false;
   }
 
-  windDirection(){
+  windDirection() {
     //NE direction
     if (this.dataSet.windDirection > 22.5 && this.dataSet.windDirection <= 67.5) {
       this.direction = "Nordeste";
