@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController, App } from 'ionic-angular';
+import { NavController, ToastController, App, LoadingController } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { Graph } from '../graph/graph';
 import moment from 'moment';
@@ -23,7 +23,9 @@ export class AboutPage {
   endString2: string;
   public dataSet: any;
 
-  constructor(private network: Network, public navCtrl: NavController, public authService: AuthServiceProvider, private toastCtrl: ToastController, public app: App) {
+  loading: any;
+
+  constructor(private network: Network, public navCtrl: NavController, public authService: AuthServiceProvider, private toastCtrl: ToastController, public app: App, public loadingCtrl: LoadingController) {
     this.date.initHour = moment().format();
     this.date.initDate = moment().format();
     this.date.endHour = moment().format();
@@ -47,17 +49,21 @@ export class AboutPage {
       // console.log(this.endString1);
       // console.log(this.endString2);
       if (moment(this.endString2).isAfter(this.initString2)) {
+        this.presentLoadingDefault();
         this.authService.getData("read/" + this.initString2 + "/" + this.endString2).then((result) => {
           this.responseData = result;
           // console.log(this.responseData);
           if (Object.keys(this.responseData).length !== 0) {
             this.dataSet = this.responseData;
+
             console.log(this.dataSet);
+
             this.navCtrl.push(Graph, {
               dataSet: this.dataSet
             });
           }
           else {
+            this.loading.dismiss();
             console.log("No data");
             this.presentToast("Não há dados, selecione outro período.");
           }
@@ -102,5 +108,13 @@ export class AboutPage {
     }
     else
       return false;
+  }
+
+  presentLoadingDefault() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Aguarde...',
+      dismissOnPageChange: true
+    });
+    this.loading.present();
   }
 }  

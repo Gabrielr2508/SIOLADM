@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, App, LoadingController } from 'ionic-angular';
 import { Chart } from 'chart.js';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 /**
@@ -34,7 +34,10 @@ export class Graph {
   dataset4: any;
   windData: any;
 
-  constructor(public plt: Platform, public navCtrl: NavController, public navParams: NavParams, private screenOrientation: ScreenOrientation, public app: App) {
+  loading: any;
+
+  constructor(public plt: Platform, public navCtrl: NavController, public navParams: NavParams, private screenOrientation: ScreenOrientation, public app: App, public loadingCtrl: LoadingController) {
+    this.presentLoadingDefault();
     //initialize canvas height
     this.height = this.plt.height() / 2;
 
@@ -96,6 +99,7 @@ export class Graph {
         },
         tooltips: {
           mode: 'index',
+          intersect: true,
           callbacks: {
             label: function (tooltipItem, data) {
               return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel + " " + mySymbols[tooltipItem.datasetIndex];
@@ -104,6 +108,7 @@ export class Graph {
         },
         responsive: true,
         maintainAspectRatio: false,
+        animation: false
       }
 
     });
@@ -145,13 +150,15 @@ export class Graph {
       },
       options: {
         tooltips: {
-          mode: 'index',
+          mode: 'nearest',
+          intersect: false,
         },
         responsive: true,
         maintainAspectRatio: false,
+        animation: false
       }
     })
-
+    this.loading.dismiss();
   }
   //format data to line graph 
   iterateData(variable) {
@@ -303,6 +310,13 @@ export class Graph {
     //Api Token Logout 
     localStorage.clear();
     setTimeout(() => this.backToWelcome(), 1000);
+  }
+
+  presentLoadingDefault() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Aguarde...'
+    });
+    this.loading.present();
   }
 
 }

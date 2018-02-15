@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, ToastController, LoadingController } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { TabsPage } from '../tabs/tabs';
 import { Signup } from '../signup/signup';
@@ -17,12 +17,15 @@ import { Network } from '@ionic-native/network';
 })
 export class Login {
   responseData: any;
+  loading: any;
   userData = {
     password: "",
     email: ""
   };
 
-  constructor(private network: Network, public navCtrl: NavController, public authService: AuthServiceProvider, private toastCtrl: ToastController) {
+
+  constructor(private network: Network, public navCtrl: NavController, public authService: AuthServiceProvider, private toastCtrl: ToastController, public loadingCtrl: LoadingController) {
+
   }
 
   ionViewDidLoad() {
@@ -36,11 +39,19 @@ export class Login {
     if (this.userData.password && this.userData.email) {
       if (this.checkConnection()) {
         if (this.validateEmail(this.userData.email) && this.validatePassword(this.userData.password)) {
+
+          this.presentLoadingDefault();
+
           this.authService.postData("password=" + this.userData.password + "&email=" + this.userData.email, "auth/login").then((result) => {
             this.responseData = result;
+
             if (this.responseData) {
               localStorage.setItem('userData', JSON.stringify(this.responseData));
               this.navCtrl.push(TabsPage);
+              
+              setTimeout(() => {
+                this.loading.dismiss();
+              }, 1000);
             }
           }, (err) => {
             //Connection failed message
@@ -67,6 +78,14 @@ export class Login {
 
     toast.present();
   }
+
+  presentLoadingDefault() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Aguarde...'
+    });
+    this.loading.present();
+  }
+
   //validade email field
   validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -93,10 +112,10 @@ export class Login {
   }
 
   checkConnection() {
-    if (this.network.type !== 'none'){
+    if (this.network.type !== 'none') {
       console.log(this.network.type);
       return true;
-  }
+    }
     else
       return false;
   }

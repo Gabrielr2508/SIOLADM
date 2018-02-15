@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, App, ToastController } from 'ionic-angular';
+import { NavController, App, ToastController, LoadingController } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { Network } from '@ionic-native/network';
 
@@ -14,8 +14,9 @@ export class HomePage {
   userToken = "";
   direction: string;
   actualDate: string;
+  loading: any;
 
-  constructor(private network: Network, private toastCtrl: ToastController, public navCtrl: NavController, public app: App, public authService: AuthServiceProvider) {
+  constructor(private network: Network, private toastCtrl: ToastController, public navCtrl: NavController, public app: App, public authService: AuthServiceProvider, public loadingCtrl: LoadingController) {
     this.dataSet = {
       barometer: "",
       dayRain: "",
@@ -35,6 +36,7 @@ export class HomePage {
 
   getRead() {
     if (this.checkConnection()) {
+      this.presentLoadingDefault();
       this.authService.getData("read/last").then((result) => {
         this.responseData = result;
         // console.log(this.responseData);
@@ -43,9 +45,11 @@ export class HomePage {
             this.dataSet = this.responseData;
             this.windDirection();
             this.actualDate = this.dataSet.readDate;
-            console.log(this.dataSet);
+            //console.log(this.dataSet);
+            this.loading.dismiss();
           }
           else
+            this.loading.dismiss();
             this.presentToast("Esses são os dados mais atuais.");
         }
         else
@@ -124,4 +128,10 @@ export class HomePage {
     }
   }
 
+  presentLoadingDefault() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Aguarde...',
+    });
+    this.loading.present();
+  }
 }
