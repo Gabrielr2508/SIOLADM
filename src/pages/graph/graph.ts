@@ -90,7 +90,7 @@ export class Graph {
 
       type: 'line',
       data: {
-        labels: this.iterateData('readDate'),
+        labels: this.iterateDate('readDate'),
         datasets: this.iterateDataset(),
       },
       options: {
@@ -161,7 +161,7 @@ export class Graph {
     this.loading.dismiss();
   }
   //format data to line graph 
-  iterateData(variable) {
+  iterateDate(variable) {
     let dataArray = new Array();
 
     //format date to locale for x axys label
@@ -225,7 +225,7 @@ export class Graph {
             pointHoverBorderWidth: 2,
             pointRadius: 1,
             pointHitRadius: 10,
-            data: this.iterateData(Object.keys(this.dataSet[0])[i].toString()),
+            data: this.iterateDate(Object.keys(this.dataSet[0])[i].toString()),
             spanGaps: false,
           }
         );
